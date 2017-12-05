@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
 
 class CalendarYear extends Component {
+
+  selectMonth(monthName, monthNumber, year) {
+    console.log(monthName, monthNumber, year)
+  }
+
   render() {
     const monthNames = [
       "Jan",
@@ -17,8 +22,14 @@ class CalendarYear extends Component {
       "Dec"
     ]
 
-    const months = monthNames.map((monthName) =>
-      <span className="calendar-month">{monthName}</span>
+    const months = monthNames.map((monthName, index) =>
+      <span
+        key={monthName}
+        className="calendar-month"
+        onClick={(e) => this.selectMonth(monthName, (index+1), this.props.year)}
+      >
+        {monthName}
+      </span>
     );
 
     return (
