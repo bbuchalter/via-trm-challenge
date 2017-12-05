@@ -1,0 +1,13 @@
+.calendar {
+  margin-bottom: 15px;
+}
+
+.calendar-year {
+  margin-bottom: 2px;
+}
+
+.calendar-month {
+  margin: 2px;
+  border: 1px gray solid;
+  padding: 2px;
+}
