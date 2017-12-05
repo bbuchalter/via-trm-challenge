@@ -11,3 +11,7 @@
   border: 1px gray solid;
   padding: 2px;
 }
+
+.month-range-picker-month.selected {
+  background-color: aqua;
+}

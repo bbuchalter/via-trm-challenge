@@ -1,9 +1,21 @@
 import React, { Component } from 'react';
+import classnames from 'classnames';
 
 class MonthRangePicker extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      selectedMonths: []
+    };
+  }
 
   selectMonth(monthName, monthNumber, year) {
-    console.log(monthName, monthNumber, year)
+    console.log(monthName, monthNumber, year);
+    this.setState(prevState => (
+      {
+        selectedMonths: prevState.selectedMonths.concat([`${year}-${monthNumber}`])
+      }
+    ));
   }
 
   monthsFor(year) {
@@ -23,15 +35,21 @@ class MonthRangePicker extends Component {
     ]
 
     return (
-      monthNames.map((monthName, index) =>
-        <span
-          key={monthName}
-          className="month-range-picker-month"
-          onClick={(e) => this.selectMonth(monthName, (index+1), year)}
-        >
-          {monthName}
-        </span>
-      )
+      monthNames.map((monthName, index) => {
+        const monthNumber = (index+1);
+        return(
+          <span
+            key={monthName}
+            className={classnames(
+              "month-range-picker-month",
+              { selected: this.state.selectedMonths.includes(`${year}-${monthNumber}`) }
+            )}
+            onClick={(e) => this.selectMonth(monthName, monthNumber, year)}
+          >
+            {monthName}
+          </span>
+        );
+      })
     )
   }
 
