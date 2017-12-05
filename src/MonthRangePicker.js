@@ -6,36 +6,36 @@ class MonthRangePicker extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedMonths: []
+      selectedDates: []
     };
   }
 
   selectDate(date) {
     this.setState(prevState => {
-      let newSelectedMonths;
-      if(prevState.selectedMonths.length === 2) {
-        newSelectedMonths = [date];
+      let newSelectedDates;
+      if(prevState.selectedDates.length === 2) {
+        newSelectedDates = [date];
       } else {
-        newSelectedMonths = prevState.selectedMonths.concat([date]);
+        newSelectedDates = prevState.selectedDates.concat([date]);
       }
 
       return (
-        { selectedMonths: newSelectedMonths }
+        { selectedDates: newSelectedDates }
       );
     });
   }
 
   isDateInSelected(date) {
-    return _.some(this.state.selectedMonths, (selectedDate) => {
+    return _.some(this.state.selectedDates, (selectedDate) => {
       return selectedDate.valueOf() === date.valueOf()
     })
   }
 
   isDateInSelectedRange(date) {
     if(
-      this.state.selectedMonths.length === 2 &&
-      date > _.min(this.state.selectedMonths) &&
-      date < _.max(this.state.selectedMonths)
+      this.state.selectedDates.length === 2 &&
+      date > _.min(this.state.selectedDates) &&
+      date < _.max(this.state.selectedDates)
     ) {
       return true;
     } else {
