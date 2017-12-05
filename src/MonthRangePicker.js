@@ -13,7 +13,8 @@ class MonthRangePicker extends Component {
   yearAndMonthAsObj(yearNumber, monthNumber) {
     return({
       year: yearNumber,
-      month: monthNumber
+      month: monthNumber,
+      date: new Date(yearNumber, monthNumber-1)
     });
   }
 
@@ -32,38 +33,25 @@ class MonthRangePicker extends Component {
     });
   }
 
-  minSelectedYear() {
-    return 2018;
+  minSelectedDate() {
+    return _.minBy(this.state.selectedMonths, (date) => date.date)
   }
 
-  maxSelectedYear() {
-    return 2018;
+  maxSelectedDate() {
+    return _.maxBy(this.state.selectedMonths, (date) => date.date)
   }
-
-  minSelectedMonth() {
-    return 2;
-  }
-
-  maxSelectedMonth() {
-    return 5;
-  }
-
 
   isMonthInSelectedRange(yearNumber, monthNumber) {
-    if(this.state.selectedMonths.length === 2) {
-      const minYear = this.minSelectedYear();
-      const maxYear = this.maxSelectedYear();
-      const currentYear = yearNumber;
-      if((minYear <= currentYear) && (currentYear <= maxYear)) {
-        const minMonth = this.minSelectedMonth();
-        const maxMonth = this.maxSelectedMonth();
-        const currentMonth = monthNumber;
-        if((minMonth < currentMonth) && (currentMonth < maxMonth)) {
-          return true;
-        }
-      }
+    const monthAsDate = new Date(yearNumber, monthNumber-1);
+    if(
+      this.state.selectedMonths.length === 2 &&
+      monthAsDate >= this.minSelectedDate().date &&
+      monthAsDate <= this.maxSelectedDate().date
+    ) {
+      return true;
+    } else {
+      return false;
     }
-    return false;
   }
 
   monthsFor(yearNumber) {
