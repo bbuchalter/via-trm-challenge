@@ -41,12 +41,11 @@ class MonthRangePicker extends Component {
     return _.maxBy(this.state.selectedMonths, (date) => date.date)
   }
 
-  isMonthInSelectedRange(yearNumber, monthNumber) {
-    const monthAsDate = new Date(yearNumber, monthNumber-1);
+  isDateInSelectedRange(date) {
     if(
       this.state.selectedMonths.length === 2 &&
-      monthAsDate >= this.minSelectedDate().date &&
-      monthAsDate <= this.maxSelectedDate().date
+      date >= this.minSelectedDate().date &&
+      date <= this.maxSelectedDate().date
     ) {
       return true;
     } else {
@@ -72,9 +71,10 @@ class MonthRangePicker extends Component {
 
     return (
       monthNames.map((monthName, index) => {
+        const date = new Date(yearNumber, index);
         const monthNumber = (index+1);
         const selected = _.some(this.state.selectedMonths, {year: yearNumber, month: monthNumber});
-        const inRange = this.isMonthInSelectedRange(yearNumber, monthNumber);
+        const inRange = this.isDateInSelectedRange(date);
 
         return(
           <span
