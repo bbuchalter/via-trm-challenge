@@ -1,15 +1,27 @@
+body {
+  color: gray;
+  margin: 20px;
+}
+
 .month-range-picker-year {
   margin-bottom: 15px;
 }
 
 .month-range-picker-year-number {
   margin-bottom: 5px;
+  font-size: smaller;
 }
 
 .month-range-picker-month {
-  margin: 2px;
-  border: 1px gray solid;
-  padding: 2px;
+  padding: 5px 10px;
+  border-top: 1px gray solid;
+  border-bottom: 1px gray solid;
+  border-right: 1px gray solid;
+  margin: 0px;
+}
+
+.month-range-picker-month:first-child {
+  border-left: 1px gray solid;
 }
 
 .month-range-picker-month.in-range {

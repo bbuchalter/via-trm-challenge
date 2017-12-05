@@ -86,7 +86,9 @@ class MonthRangePicker extends Component {
     const years = this.props.years.split(",").map((year) =>
       <div key={year} className="month-range-picker-year">
         <div className="month-range-picker-year-number">{year}</div>
-        { this.monthsFor(parseInt(year, 10)) }
+        <div>
+          { this.monthsFor(parseInt(year, 10)) }
+        </div>
       </div>
     );
 
