@@ -24,6 +24,40 @@ class MonthRangePicker extends Component {
     });
   }
 
+  minSelectedYear() {
+    return "2018";
+  }
+
+  maxSelectedYear() {
+    return "2018";
+  }
+
+  minSelectedMonth() {
+    return "2";
+  }
+
+  maxSelectedMonth() {
+    return "5";
+  }
+
+
+  isMonthInSelectedRange(year, monthNumber) {
+    if(this.state.selectedMonths.length === 2) {
+      const minYear = parseInt(this.minSelectedYear(), 10);
+      const maxYear = parseInt(this.maxSelectedYear(), 10);
+      const currentYear = parseInt(year, 10);
+      if((minYear <= currentYear) && (currentYear <= maxYear)) {
+        const minMonth = parseInt(this.minSelectedMonth(), 10);
+        const maxMonth = parseInt(this.maxSelectedMonth(), 10);
+        const currentMonth = parseInt(monthNumber, 10);
+        if((minMonth < currentMonth) && (currentMonth < maxMonth)) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
   monthsFor(year) {
     const monthNames = [
       "Jan",
@@ -43,12 +77,18 @@ class MonthRangePicker extends Component {
     return (
       monthNames.map((monthName, index) => {
         const monthNumber = (index+1);
+        const selected = this.state.selectedMonths.includes(`${year}-${monthNumber}`);
+        const inRange = this.isMonthInSelectedRange(year, monthNumber);
+
         return(
           <span
             key={monthName}
             className={classnames(
               "month-range-picker-month",
-              { selected: this.state.selectedMonths.includes(`${year}-${monthNumber}`) }
+              {
+                selected: selected,
+                "in-range": inRange
+              }
             )}
             onClick={(e) => this.selectMonth(monthName, monthNumber, year)}
           >

@@ -12,6 +12,10 @@
   padding: 2px;
 }
 
+.month-range-picker-month.in-range {
+  background-color: lightgray;
+}
+
 .month-range-picker-month.selected {
   background-color: aqua;
 }
