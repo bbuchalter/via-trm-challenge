@@ -12,16 +12,15 @@ class MonthRangePicker extends Component {
 
   selectDate(date) {
     this.setState(prevState => {
-      let newSelectedDates;
       if(prevState.selectedDates.length === 2) {
-        newSelectedDates = [date];
+        return (
+          { selectedDates: [date] }
+        )
       } else {
-        newSelectedDates = prevState.selectedDates.concat([date]);
+        return (
+          { selectedDates: prevState.selectedDates.concat([date]) }
+        )
       }
-
-      return (
-        { selectedDates: newSelectedDates }
-      );
     });
   }
 
@@ -66,6 +65,7 @@ class MonthRangePicker extends Component {
         return(
           <span
             key={monthName}
+            onClick={(e) => this.selectDate(date)}
             className={classnames(
               "month-range-picker-month",
               {
@@ -73,7 +73,6 @@ class MonthRangePicker extends Component {
                 "in-range": this.isDateInSelectedRange(date)
               }
             )}
-            onClick={(e) => this.selectDate(date)}
           >
             {monthName}
           </span>
