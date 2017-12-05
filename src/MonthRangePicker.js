@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import classnames from 'classnames';
+import _ from 'lodash';
 
 class MonthRangePicker extends Component {
   constructor(props) {
@@ -9,13 +10,20 @@ class MonthRangePicker extends Component {
     };
   }
 
-  selectMonth(monthName, monthNumber, year) {
+  yearAndMonthAsObj(yearNumber, monthNumber) {
+    return({
+      year: yearNumber,
+      month: monthNumber
+    });
+  }
+
+  selectMonth(monthNumber, yearNumber) {
     this.setState(prevState => {
       let newSelectedMonths;
       if(prevState.selectedMonths.length === 2) {
-        newSelectedMonths = [`${year}-${monthNumber}`];
+        newSelectedMonths = [this.yearAndMonthAsObj(yearNumber, monthNumber)];
       } else {
-        newSelectedMonths = prevState.selectedMonths.concat([`${year}-${monthNumber}`]);
+        newSelectedMonths = prevState.selectedMonths.concat([this.yearAndMonthAsObj(yearNumber, monthNumber)]);
       }
 
       return (
@@ -25,31 +33,31 @@ class MonthRangePicker extends Component {
   }
 
   minSelectedYear() {
-    return "2018";
+    return 2018;
   }
 
   maxSelectedYear() {
-    return "2018";
+    return 2018;
   }
 
   minSelectedMonth() {
-    return "2";
+    return 2;
   }
 
   maxSelectedMonth() {
-    return "5";
+    return 5;
   }
 
 
-  isMonthInSelectedRange(year, monthNumber) {
+  isMonthInSelectedRange(yearNumber, monthNumber) {
     if(this.state.selectedMonths.length === 2) {
-      const minYear = parseInt(this.minSelectedYear(), 10);
-      const maxYear = parseInt(this.maxSelectedYear(), 10);
-      const currentYear = parseInt(year, 10);
+      const minYear = this.minSelectedYear();
+      const maxYear = this.maxSelectedYear();
+      const currentYear = yearNumber;
       if((minYear <= currentYear) && (currentYear <= maxYear)) {
-        const minMonth = parseInt(this.minSelectedMonth(), 10);
-        const maxMonth = parseInt(this.maxSelectedMonth(), 10);
-        const currentMonth = parseInt(monthNumber, 10);
+        const minMonth = this.minSelectedMonth();
+        const maxMonth = this.maxSelectedMonth();
+        const currentMonth = monthNumber;
         if((minMonth < currentMonth) && (currentMonth < maxMonth)) {
           return true;
         }
@@ -58,7 +66,7 @@ class MonthRangePicker extends Component {
     return false;
   }
 
-  monthsFor(year) {
+  monthsFor(yearNumber) {
     const monthNames = [
       "Jan",
       "Feb",
@@ -77,8 +85,8 @@ class MonthRangePicker extends Component {
     return (
       monthNames.map((monthName, index) => {
         const monthNumber = (index+1);
-        const selected = this.state.selectedMonths.includes(`${year}-${monthNumber}`);
-        const inRange = this.isMonthInSelectedRange(year, monthNumber);
+        const selected = _.some(this.state.selectedMonths, {year: yearNumber, month: monthNumber});
+        const inRange = this.isMonthInSelectedRange(yearNumber, monthNumber);
 
         return(
           <span
@@ -90,7 +98,7 @@ class MonthRangePicker extends Component {
                 "in-range": inRange
               }
             )}
-            onClick={(e) => this.selectMonth(monthName, monthNumber, year)}
+            onClick={(e) => this.selectMonth(monthNumber, yearNumber)}
           >
             {monthName}
           </span>
@@ -103,7 +111,7 @@ class MonthRangePicker extends Component {
     const years = this.props.years.split(",").map((year) =>
       <div key={year} className="month-range-picker-year">
         <div className="month-range-picker-year-number">{year}</div>
-        { this.monthsFor(year) }
+        { this.monthsFor(parseInt(year, 10)) }
       </div>
     );
 
