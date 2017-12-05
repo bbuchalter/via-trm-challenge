@@ -10,12 +10,18 @@ class MonthRangePicker extends Component {
   }
 
   selectMonth(monthName, monthNumber, year) {
-    console.log(monthName, monthNumber, year);
-    this.setState(prevState => (
-      {
-        selectedMonths: prevState.selectedMonths.concat([`${year}-${monthNumber}`])
+    this.setState(prevState => {
+      let newSelectedMonths;
+      if(prevState.selectedMonths.length === 2) {
+        newSelectedMonths = [`${year}-${monthNumber}`];
+      } else {
+        newSelectedMonths = prevState.selectedMonths.concat([`${year}-${monthNumber}`]);
       }
-    ));
+
+      return (
+        { selectedMonths: newSelectedMonths }
+      );
+    });
   }
 
   monthsFor(year) {
