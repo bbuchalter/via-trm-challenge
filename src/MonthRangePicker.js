@@ -10,21 +10,13 @@ class MonthRangePicker extends Component {
     };
   }
 
-  yearAndMonthAsObj(yearNumber, monthNumber) {
-    return({
-      year: yearNumber,
-      month: monthNumber,
-      date: new Date(yearNumber, monthNumber-1)
-    });
-  }
-
-  selectMonth(monthNumber, yearNumber) {
+  selectDate(date) {
     this.setState(prevState => {
       let newSelectedMonths;
       if(prevState.selectedMonths.length === 2) {
-        newSelectedMonths = [this.yearAndMonthAsObj(yearNumber, monthNumber)];
+        newSelectedMonths = [date];
       } else {
-        newSelectedMonths = prevState.selectedMonths.concat([this.yearAndMonthAsObj(yearNumber, monthNumber)]);
+        newSelectedMonths = prevState.selectedMonths.concat([date]);
       }
 
       return (
@@ -33,19 +25,17 @@ class MonthRangePicker extends Component {
     });
   }
 
-  minSelectedDate() {
-    return _.minBy(this.state.selectedMonths, (date) => date.date)
-  }
-
-  maxSelectedDate() {
-    return _.maxBy(this.state.selectedMonths, (date) => date.date)
+  isDateInSelected(date) {
+    return _.some(this.state.selectedMonths, (selectedDate) => {
+      return selectedDate.valueOf() === date.valueOf()
+    })
   }
 
   isDateInSelectedRange(date) {
     if(
       this.state.selectedMonths.length === 2 &&
-      date >= this.minSelectedDate().date &&
-      date <= this.maxSelectedDate().date
+      date > _.min(this.state.selectedMonths) &&
+      date < _.max(this.state.selectedMonths)
     ) {
       return true;
     } else {
@@ -72,9 +62,6 @@ class MonthRangePicker extends Component {
     return (
       monthNames.map((monthName, index) => {
         const date = new Date(yearNumber, index);
-        const monthNumber = (index+1);
-        const selected = _.some(this.state.selectedMonths, {year: yearNumber, month: monthNumber});
-        const inRange = this.isDateInSelectedRange(date);
 
         return(
           <span
@@ -82,11 +69,11 @@ class MonthRangePicker extends Component {
             className={classnames(
               "month-range-picker-month",
               {
-                selected: selected,
-                "in-range": inRange
+                selected: this.isDateInSelected(date),
+                "in-range": this.isDateInSelectedRange(date)
               }
             )}
-            onClick={(e) => this.selectMonth(monthNumber, yearNumber)}
+            onClick={(e) => this.selectDate(date)}
           >
             {monthName}
           </span>
