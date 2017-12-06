@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import countries from 'node-countries';
+import countryList from 'iso-3166-country-list';
+import usData from 'us';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import TextField from 'material-ui/TextField';
@@ -21,12 +22,12 @@ class AddressForm extends Component {
   render () {
     const { country, region } = this.state;
 
-    const countryOptions = countries.JSON.map((country) => {
-      return <MenuItem key={country.name} primaryText={country.name} value={country.name} />
+    const countryOptions = countryList.names.map((country_name) => {
+      return <MenuItem key={country_name} primaryText={country_name} value={country_name} />
     })
 
-    const usStateOptions = countries.US.provinces.map((state) => {
-      return <MenuItem key={country.name} primaryText={state.name} value={state.name} />
+    const usStateOptions = usData.STATES.map((state) => {
+      return <MenuItem key={state.name} primaryText={state.name} value={state.name} />
     })
 
     return (
