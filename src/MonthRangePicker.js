@@ -82,7 +82,7 @@ class MonthRangePicker extends Component {
           {monthName}
         </FlatButton>
 
-        if(index != 5) {
+        if(index !== 5) {
           return button;
         } else {
           return [button, <br/>];
