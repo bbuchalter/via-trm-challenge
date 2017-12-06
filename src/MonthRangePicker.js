@@ -70,20 +70,23 @@ class MonthRangePicker extends Component {
     return (
       monthNames.map((monthName, index) => {
         const date = new Date(yearNumber, index);
+        const button = <FlatButton
+          key={monthName}
+          onClick={(e) => this.selectDate(date)}
+          backgroundColor={this.backGroundColorByDate(date)}
+          hoverColor={this.backGroundColorByDate(date)}
+          style={{
+            border: '',
+          }}
+        >
+          {monthName}
+        </FlatButton>
 
-        return(
-          <FlatButton
-            key={monthName}
-            onClick={(e) => this.selectDate(date)}
-            backgroundColor={this.backGroundColorByDate(date)}
-            hoverColor={this.backGroundColorByDate(date)}
-            style={{
-              border: '',
-            }}
-          >
-            {monthName}
-          </FlatButton>
-        );
+        if(index != 5) {
+          return button;
+        } else {
+          return [button, <br/>];
+        }
       })
     )
   }
