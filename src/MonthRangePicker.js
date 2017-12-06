@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import classnames from 'classnames';
 import _ from 'lodash';
+import FlatButton from 'material-ui/FlatButton';
 
 class MonthRangePicker extends Component {
   constructor(props) {
@@ -42,6 +42,14 @@ class MonthRangePicker extends Component {
     }
   }
 
+  backGroundColorByDate(date) {
+    if(this.isDateInSelected(date)) {
+      return "aqua";
+    } else if(this.isDateInSelectedRange(date)) {
+      return "lightgray";
+    }
+  }
+
   monthsFor(yearNumber) {
     const monthNames = [
       "Jan",
@@ -63,19 +71,17 @@ class MonthRangePicker extends Component {
         const date = new Date(yearNumber, index);
 
         return(
-          <span
+          <FlatButton
             key={monthName}
             onClick={(e) => this.selectDate(date)}
-            className={classnames(
-              "month-range-picker-month",
-              {
-                selected: this.isDateInSelected(date),
-                "in-range": this.isDateInSelectedRange(date)
-              }
-            )}
+            backgroundColor={this.backGroundColorByDate(date)}
+            hoverColor={this.backGroundColorByDate(date)}
+            style={{
+              border: '',
+            }}
           >
             {monthName}
-          </span>
+          </FlatButton>
         );
       })
     )

@@ -12,23 +12,3 @@ body {
   margin-bottom: 5px;
   font-size: smaller;
 }
-
-.month-range-picker-month {
-  padding: 5px 10px;
-  border-top: 1px gray solid;
-  border-bottom: 1px gray solid;
-  border-right: 1px gray solid;
-  margin: 0px;
-}
-
-.month-range-picker-month:first-child {
-  border-left: 1px gray solid;
-}
-
-.month-range-picker-month.in-range {
-  background-color: lightgray;
-}
-
-.month-range-picker-month.selected {
-  background-color: aqua;
-}
