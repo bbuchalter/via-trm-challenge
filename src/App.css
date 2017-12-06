@@ -1,6 +1,7 @@
 body {
   color: gray;
   margin: 20px;
+  font-family: 'Roboto', sans-serif;
 }
 
 .month-range-picker-year {

@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import countries from 'node-countries';
+import SelectField from 'material-ui/SelectField';
+import MenuItem from 'material-ui/MenuItem';
+import TextField from 'material-ui/TextField';
 
 class AddressForm extends Component {
   constructor (props) {
@@ -19,30 +22,38 @@ class AddressForm extends Component {
     const { country, region } = this.state;
 
     const countryOptions = countries.JSON.map((country) => {
-      return <option value={country.name}>{country.name}</option>
+      return <MenuItem primaryText={country.name} value={country.name} />
     })
 
     const usStateOptions = countries.US.provinces.map((state) => {
-      return <option value={state.name}>{state.name}</option>
+      return <MenuItem primaryText={state.name} value={state.name} />
     })
 
     return (
       <div>
-        <select
+        <SelectField
+          floatingLabelText="Country"
+          autoWidth={true}
           value={country}
-          onChange={(e) => this.selectCountry(e.target.value)}>
-          <option value=""></option>
+          maxHeight={200}
+          onChange={(e,index,value) => this.selectCountry(value)}>
+          <MenuItem value={null} primaryText="" />
+          <MenuItem value="United States" primaryText="United States" />
           {countryOptions}
-        </select>
+        </SelectField>
+        <br/>
         { this.state.country === 'United States' ? (
-          <select
+          <SelectField
+            floatingLabelText="State"
+            autoWidth={true}
             value={region}
-            onChange={(e) => this.selectRegion(e.target.value)}>
-            <option value=""></option>
+            maxHeight={200}
+            onChange={(e,index,value) => this.selectRegion(value)}>
+            <MenuItem value={null} primaryText="" />
             {usStateOptions}
-          </select>
+          </SelectField>
         ) : (
-          <input type="text" value={region} onChange={(e) => this.selectRegion(e.target.value)} />
+          <TextField floatingLabelText="Region" value={region} onChange={(e ,value) => this.selectRegion(value)} />
         )}
       </div>
     );
