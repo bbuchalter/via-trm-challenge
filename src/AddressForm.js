@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { CountryDropdown, RegionDropdown } from 'react-country-region-selector';
+import countries from 'node-countries';
 
 class AddressForm extends Component {
   constructor (props) {
@@ -17,16 +17,30 @@ class AddressForm extends Component {
 
   render () {
     const { country, region } = this.state;
+
+    const countryOptions = countries.JSON.map((country) => {
+      return <option value={country.name}>{country.name}</option>
+    })
+
+    const usStateOptions = countries.US.provinces.map((state) => {
+      return <option value={state.name}>{state.name}</option>
+    })
+
     return (
       <div>
-        <CountryDropdown
+        <select
           value={country}
-          onChange={(val) => this.selectCountry(val)} />
+          onChange={(e) => this.selectCountry(e.target.value)}>
+          <option value=""></option>
+          {countryOptions}
+        </select>
         { this.state.country === 'United States' ? (
-          <RegionDropdown
-          country={country}
-          value={region}
-          onChange={(val) => this.selectRegion(val)} />
+          <select
+            value={region}
+            onChange={(e) => this.selectRegion(e.target.value)}>
+            <option value=""></option>
+            {usStateOptions}
+          </select>
         ) : (
           <input type="text" value={region} onChange={(e) => this.selectRegion(e.target.value)} />
         )}
