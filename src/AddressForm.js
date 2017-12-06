@@ -22,11 +22,11 @@ class AddressForm extends Component {
     const { country, region } = this.state;
 
     const countryOptions = countries.JSON.map((country) => {
-      return <MenuItem primaryText={country.name} value={country.name} />
+      return <MenuItem key={country.name} primaryText={country.name} value={country.name} />
     })
 
     const usStateOptions = countries.US.provinces.map((state) => {
-      return <MenuItem primaryText={state.name} value={state.name} />
+      return <MenuItem key={country.name} primaryText={state.name} value={state.name} />
     })
 
     return (
