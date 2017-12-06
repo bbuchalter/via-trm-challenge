@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import _ from 'lodash';
 import FlatButton from 'material-ui/FlatButton';
+import muiThemeable from 'material-ui/styles/muiThemeable';
 
 class MonthRangePicker extends Component {
   constructor(props) {
@@ -44,9 +45,9 @@ class MonthRangePicker extends Component {
 
   backGroundColorByDate(date) {
     if(this.isDateInSelected(date)) {
-      return "aqua";
+      return this.props.muiTheme.palette.primary1Color;
     } else if(this.isDateInSelectedRange(date)) {
-      return "lightgray";
+      return this.props.muiTheme.palette.disabledColor;
     }
   }
 
@@ -99,4 +100,4 @@ class MonthRangePicker extends Component {
   }
 }
 
-export default MonthRangePicker;
+export default muiThemeable()(MonthRangePicker);
